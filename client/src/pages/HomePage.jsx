@@ -40,7 +40,6 @@ const HomePage = () => {
 				key={key}
 				className='bg-[#141416] border border-[#1f1f23] rounded-2xl overflow-hidden cursor-pointer hover:border-[#34343a] hover:-translate-y-1 transition'
 				onClick={() => navigate(`/books/${book.id}`)}>
-				{/* Cover */}
 				<div
 					className='h-58 flex flex-col justify-end p-5'
 					style={{ background: coverColors[key % coverColors.length] }}>
@@ -51,8 +50,6 @@ const HomePage = () => {
 						{book.author}
 					</p>
 				</div>
-
-				{/* Info */}
 				<div className='p-4 flex items-center justify-between'>
 					<span className='text-[11px] font-semibold uppercase tracking-wide text-[#9b9ba3] bg-[#1b1b1f] border border-[#26262b] px-2.5 py-1 rounded-md'>
 						{book.genre}
