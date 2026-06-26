@@ -6,12 +6,14 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AddBookPage from './pages/AddBookPage';
 import { AuthProvider } from './context/AuthContext';
+import Navbar from './components/Navbar';
 
 const App = () => {
 	return (
 		<>
 			<AuthProvider>
 				<BrowserRouter>
+					<Navbar />
 					<Routes>
 						<Route path='/' element={<HomePage />} />
 						<Route path='/books/:id' element={<BookDetailPage />} />
