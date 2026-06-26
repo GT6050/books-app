@@ -5,19 +5,22 @@ import BookDetailPage from './pages/BookDetailPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AddBookPage from './pages/AddBookPage';
+import { AuthProvider } from './context/AuthContext';
 
 const App = () => {
 	return (
 		<>
-			<BrowserRouter>
-				<Routes>
-					<Route path='/' element={<HomePage />} />
-					<Route path='/books/:id' element={<BookDetailPage />} />
-					<Route path='/login' element={<LoginPage />} />
-					<Route path='/register' element={<RegisterPage />} />
-					<Route path='/add' element={<AddBookPage />} />
-				</Routes>
-			</BrowserRouter>
+			<AuthProvider>
+				<BrowserRouter>
+					<Routes>
+						<Route path='/' element={<HomePage />} />
+						<Route path='/books/:id' element={<BookDetailPage />} />
+						<Route path='/login' element={<LoginPage />} />
+						<Route path='/register' element={<RegisterPage />} />
+						<Route path='/add' element={<AddBookPage />} />
+					</Routes>
+				</BrowserRouter>
+			</AuthProvider>
 		</>
 	);
 };
