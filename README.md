@@ -1,4 +1,4 @@
-# Margins — Books Review App
+# Margins - Books Review App
 
 A full-stack web application for discovering and reviewing books. Users can
 browse books, write reviews, and manage their own book entries.
@@ -27,8 +27,8 @@ browse books, write reviews, and manage their own book entries.
 - View book details and reviews
 - Add, edit and delete your own books
 - Write and delete your own reviews with 1-5 star rating
-- Protected routes — only logged-in users can add books or reviews
-- Ownership checks — users can only edit/delete their own content
+- Protected routes - only logged-in users can add books or reviews
+- Ownership checks - users can only edit/delete their own content
 - Responsive design with mobile hamburger menu
 
 ## Running locally
