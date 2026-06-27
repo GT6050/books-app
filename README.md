@@ -1,17 +1,20 @@
 # Margins — Books Review App
 
-A full-stack web application for discovering and reviewing books. Users can browse books, write reviews, and manage their own book entries.
+A full-stack web application for discovering and reviewing books. Users can
+browse books, write reviews, and manage their own book entries.
 
-**Live demo:** https://stalwart-salamander-fc8ffe.netlify.app
+**Live demo:** https://margins-books-app.netlify.app
 
 ## Tech Stack
 
 **Frontend**
+
 - React + Vite
 - Tailwind CSS
 - React Router
 
 **Backend**
+
 - Node.js + Express
 - PostgreSQL (raw SQL, no ORM)
 - JWT authentication
@@ -31,6 +34,7 @@ A full-stack web application for discovering and reviewing books. Users can brow
 ## Running locally
 
 **Backend**
+
 ```bash
 cd server
 npm install
@@ -39,6 +43,7 @@ npm start
 ```
 
 **Frontend**
+
 ```bash
 cd client
 npm install
@@ -48,11 +53,11 @@ npm run dev
 
 ## API Endpoints
 
-| Method |           Endpoint           |       Description       | Auth |
-|--------|------------------------------|-------------------------|------|
+| Method | Endpoint                     | Description             | Auth |
+| ------ | ---------------------------- | ----------------------- | ---- |
 | POST   | /auth/register               | Register a new user     | No   |
 | POST   | /auth/login                  | Login and get JWT token | No   |
-| GET    | /books                       | Get all books           | No   |            
+| GET    | /books                       | Get all books           | No   |
 | GET    | /books/:id                   | Get a single book       | No   |
 | POST   | /books                       | Add a new book          | Yes  |
 | PUT    | /books/:id                   | Update a book           | Yes  |
