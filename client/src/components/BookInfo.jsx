@@ -1,6 +1,8 @@
 import React from 'react';
 
 const BookInfo = ({ book, user, onDelete }) => {
+	console.log('user.id:', user?.id, typeof user?.id);
+	console.log('book.created_by:', book?.created_by, typeof book?.created_by);
 	return (
 		<div className='flex flex-col md:flex-row gap-8 mb-12'>
 			<div className='w-full md:w-64 shrink-0'>
