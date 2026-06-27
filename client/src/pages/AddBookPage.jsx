@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 const AddBookPage = () => {
 	const [formData, setFormData] = useState({
@@ -22,6 +22,10 @@ const AddBookPage = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		if (!title || !author || !genre || !description || !cover_image) {
+			setError('All fields are required');
+			return;
+		}
 		try {
 			const res = await fetch('http://localhost:3000/books', {
 				method: 'POST',
@@ -39,12 +43,13 @@ const AddBookPage = () => {
 			});
 
 			if (!res.ok) {
-				throw new Error(`Response status: ${res.status}`);
+				const errData = await res.json();
+				throw new Error(errData.message || 'Failed to add book');
 			}
 
 			navigate('/');
 		} catch (error) {
-			setError(error);
+			setError(error.message);
 		}
 	};
 	return (

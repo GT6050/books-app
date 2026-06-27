@@ -12,7 +12,7 @@ const Navbar = () => {
 		navigate('/login');
 	};
 	return (
-		<header className='sticky top-0 z-50 backdrop-blur-md bg-[#0a0a0c]/70 border-b border-[#1c1c20]'>
+		<header className='fixed top-0 z-50 w-full backdrop-blur-md bg-[#0a0a0c]/70 border-b border-[#1c1c20]'>
 			<div className='max-w-5xl mx-auto px-6 py-3 flex items-center justify-between'>
 				<NavLink
 					to='/'

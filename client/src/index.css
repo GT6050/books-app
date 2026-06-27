@@ -5,3 +5,6 @@ body {
 	font-family: 'Hanken Grotesk', system-ui, sans-serif;
 	-webkit-font-smoothing: antialiased;
 }
+main {
+	padding-top: 64px;
+}

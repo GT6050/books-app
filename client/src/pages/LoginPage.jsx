@@ -14,6 +14,10 @@ const LoginPage = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		if (!email || !password) {
+			setError('All fields are required');
+			return;
+		}
 		try {
 			const res = await fetch('http://localhost:3000/auth/login', {
 				method: 'POST',
@@ -22,7 +26,8 @@ const LoginPage = () => {
 			});
 
 			if (!res.ok) {
-				throw new Error(`Response status: ${res.status}`);
+				const errData = await res.json();
+				throw new Error(errData.message || 'Login failed');
 			}
 
 			const data = await res.json();

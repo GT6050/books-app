@@ -15,6 +15,14 @@ const RegisterPage = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		if (!username || !email || !password) {
+			setError('All fields are required');
+			return;
+		}
+		if (password.length < 8) {
+			setError('Password must be at least 8 characters');
+			return;
+		}
 		try {
 			const res = await fetch('http://localhost:3000/auth/register', {
 				method: 'POST',
@@ -22,7 +30,8 @@ const RegisterPage = () => {
 				body: JSON.stringify({ username, email, password }),
 			});
 			if (!res.ok) {
-				throw new Error(`Response status: ${res.status}`);
+				const errData = await res.json();
+				throw new Error(errData.message || 'Registration failed');
 			}
 			navigate('/login');
 		} catch (error) {
@@ -84,7 +93,9 @@ const RegisterPage = () => {
 						Log in
 					</NavLink>
 				</p>
-				{error && <p>{error}</p>}
+				{error && (
+					<p className='text-red-400 text-sm mt-3 text-center'>{error}</p>
+				)}
 			</form>
 		</div>
 	);

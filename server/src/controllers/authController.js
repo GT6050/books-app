@@ -53,7 +53,14 @@ const login = async (req, res) => {
 			expiresIn: '7d',
 		});
 
-		res.status(200).json({ token });
+		res.status(200).json({
+			token,
+			user: {
+				id: foundUser.id,
+				username: foundUser.username,
+				email: foundUser.email,
+			},
+		});
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({ message: 'Server error' });

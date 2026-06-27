@@ -1,0 +1,22 @@
+import { useState, useEffect } from 'react';
+
+export const useBooks = () => {
+	const [books, setBooks] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+	useEffect(() => {
+		async function fetchBooks() {
+			try {
+				const res = await fetch('http://localhost:3000/books');
+				const data = await res.json();
+				setBooks(data.books);
+			} catch (err) {
+				setError(err.message);
+			} finally {
+				setLoading(false);
+			}
+		}
+		fetchBooks();
+	}, []);
+	return { books, loading, error };
+};

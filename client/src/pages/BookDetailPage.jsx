@@ -1,52 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-const BookDetailPage = () => {
-	const [book, setBook] = useState(null);
-	const [reviews, setReviews] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [reviewForm, setReviewForm] = useState({ rating: '', comment: '' });
-	const [error, setError] = useState(null);
+import { useBook } from '../hooks/useBook';
+import { useReviews } from '../hooks/useReviews';
+import ReviewCard from '../components/ReviewCard';
 
+const BookDetailPage = () => {
 	const { id } = useParams();
 	const { token } = useAuth();
+	const { book, loading: bookLoading } = useBook(id);
+	const { reviews, setReviews } = useReviews(id);
+	const [reviewForm, setReviewForm] = useState({ rating: '', comment: '' });
+	const [error, setError] = useState(null);
 	const { rating, comment } = reviewForm;
-
-	useEffect(() => {
-		const fetchBook = async () => {
-			try {
-				const res = await fetch(`http://localhost:3000/books/${id}`);
-				if (!res.ok) {
-					throw new Error(`Response status: ${res.status}`);
-				}
-				const data = await res.json();
-				setBook(data.book);
-			} catch (error) {
-				setError(error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		const fetchReviews = async () => {
-			try {
-				const res = await fetch(`http://localhost:3000/books/${id}/reviews`);
-				if (!res.ok) {
-					throw new Error(`Response status: ${res.status}`);
-				}
-				const data = await res.json();
-				setReviews(data.reviews);
-			} catch (error) {
-				setError(error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchBook();
-		fetchReviews();
-	}, [id]);
 
 	const handleReviewSubmit = async (event) => {
 		event.preventDefault();
@@ -58,7 +24,7 @@ const BookDetailPage = () => {
 					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify({
-					rating,
+					rating: Number(rating),
 					comment,
 				}),
 			});
@@ -68,26 +34,41 @@ const BookDetailPage = () => {
 			}
 
 			const data = await res.json();
+			console.log('review response:', data);
 			setReviews((prevReviews) => [...prevReviews, data.review]);
+			setReviewForm({ rating: '', comment: '' });
 		} catch (error) {
 			setError(error);
 		}
 	};
+
 	return (
 		<main className='max-w-5xl mx-auto px-6 py-10'>
-			{loading && <span>Loading...</span>}
+			{bookLoading && <span>Loading...</span>}
 			{book && (
-				<div>
-					<h1 className='text-3xl font-bold text-[#f4f4f3] tracking-tight mb-2'>
-						{book.title}
-					</h1>
-					<p className='text-[#9b9ba3] text-sm mb-2'>{book.author}</p>
-					<span className='text-[11px] font-semibold uppercase tracking-wide text-[#9b9ba3] bg-[#1b1b1f] border border-[#26262b] px-2.5 py-1 rounded-md'>
-						{book.genre}
-					</span>
-					<p className='text-[#c8c8cf] text-sm mt-4 leading-relaxed'>
-						{book.description}
-					</p>
+				<div className='flex flex-col md:flex-row gap-8 mb-12'>
+		
+					<div className='w-full md:w-64 shrink-0'>
+						<img
+							src={book.cover_image}
+							alt={book.title}
+							className='w-full rounded-2xl object-cover shadow-lg'
+						/>
+					</div>
+
+				
+					<div className='flex-1'>
+						<h1 className='text-3xl font-bold text-[#f4f4f3] tracking-tight mb-2'>
+							{book.title}
+						</h1>
+						<p className='text-[#9b9ba3] text-sm mb-3'>{book.author}</p>
+						<span className='text-[11px] font-semibold uppercase tracking-wide text-[#9b9ba3] bg-[#1b1b1f] border border-[#26262b] px-2.5 py-1 rounded-md'>
+							{book.genre}
+						</span>
+						<p className='text-[#c8c8cf] text-sm mt-6 leading-relaxed'>
+							{book.description}
+						</p>
+					</div>
 				</div>
 			)}
 			<div className='mt-10'>
@@ -98,14 +79,7 @@ const BookDetailPage = () => {
 					</p>
 				)}
 				{reviews.map((review) => (
-					<div
-						key={review.id}
-						className='bg-[#141416] border border-[#1f1f23] rounded-2xl p-5 mb-3'>
-						<p className='text-[#f6b73c] font-bold text-sm mb-1'>
-							★ {review.rating} / 5
-						</p>
-						<p className='text-[#c8c8cf] text-sm'>{review.comment}</p>
-					</div>
+					<ReviewCard key={review.id} review={review} />
 				))}
 			</div>
 			{token && (
