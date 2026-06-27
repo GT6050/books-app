@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BookInfo = ({ book, user, onDelete }) => {
+const BookInfo = ({ book, user, onDelete, onEdit }) => {
 	return (
 		<div className='flex flex-col md:flex-row gap-8 mb-12'>
 			<div className='w-full md:w-64 shrink-0'>
@@ -28,6 +28,11 @@ const BookInfo = ({ book, user, onDelete }) => {
 							onClick={onDelete}
 							className='bg-red-500/10 text-red-400 border border-red-500/20 font-semibold text-sm px-4 py-2 rounded-[10px] cursor-pointer'>
 							Delete book
+						</button>
+						<button
+							onClick={onEdit}
+							className='bg-[#f6b73c]/10 text-[#f6b73c] border border-[#f6b73c]/20 font-semibold text-sm px-4 py-2 rounded-[10px] cursor-pointer'>
+							Edit book
 						</button>
 					</div>
 				)}

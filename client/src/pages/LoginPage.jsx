@@ -79,7 +79,9 @@ const LoginPage = () => {
 						Register
 					</NavLink>
 				</p>
-				{error && <p>{error}</p>}
+				{error && (
+					<p className='text-red-400 text-sm mt-3 text-center'>{error}</p>
+				)}
 			</form>
 		</div>
 	);

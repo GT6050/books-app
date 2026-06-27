@@ -83,7 +83,14 @@ const BookDetailPage = () => {
 	return (
 		<main className='max-w-5xl mx-auto px-6 py-10'>
 			{bookLoading && <span>Loading...</span>}
-			{book && <BookInfo book={book} user={user} onDelete={handleDeleteBook} />}
+			{book && (
+				<BookInfo
+					book={book}
+					user={user}
+					onDelete={handleDeleteBook}
+					onEdit={() => navigate(`/books/${id}/edit`)}
+				/>
+			)}
 			<ReviewsList
 				reviews={reviews}
 				bookId={id}
