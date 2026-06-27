@@ -17,17 +17,20 @@ const BookDetailPage = () => {
 	const handleReviewSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			const res = await fetch(`http://localhost:3000/books/${id}/reviews`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
+			const res = await fetch(
+				`${import.meta.env.VITE_API_URL}/books/${id}/reviews`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({
+						rating: Number(rating),
+						comment,
+					}),
 				},
-				body: JSON.stringify({
-					rating: Number(rating),
-					comment,
-				}),
-			});
+			);
 
 			if (!res.ok) {
 				throw new Error(`Response status: ${res.status}`);
@@ -47,7 +50,6 @@ const BookDetailPage = () => {
 			{bookLoading && <span>Loading...</span>}
 			{book && (
 				<div className='flex flex-col md:flex-row gap-8 mb-12'>
-		
 					<div className='w-full md:w-64 shrink-0'>
 						<img
 							src={book.cover_image}
@@ -56,7 +58,6 @@ const BookDetailPage = () => {
 						/>
 					</div>
 
-				
 					<div className='flex-1'>
 						<h1 className='text-3xl font-bold text-[#f4f4f3] tracking-tight mb-2'>
 							{book.title}

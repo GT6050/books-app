@@ -27,7 +27,7 @@ const AddBookPage = () => {
 			return;
 		}
 		try {
-			const res = await fetch('http://localhost:3000/books', {
+			const res = await fetch(`${import.meta.env.VITE_API_URL}/books`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

@@ -7,7 +7,7 @@ export const useBooks = () => {
 	useEffect(() => {
 		async function fetchBooks() {
 			try {
-				const res = await fetch('http://localhost:3000/books');
+				const res = await fetch(`${import.meta.env.VITE_API_URL}/books`);
 				const data = await res.json();
 				setBooks(data.books);
 			} catch (err) {
