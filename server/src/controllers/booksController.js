@@ -124,6 +124,7 @@ const deleteBook = async (req, res) => {
 				.json({ message: 'Not authorized to delete this book' });
 		}
 
+		await pool.query('DELETE FROM reviews WHERE book_id=$1', [bookId]);
 		const result = await pool.query(
 			'DELETE FROM books WHERE id=$1 RETURNING *',
 			[bookId],
