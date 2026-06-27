@@ -10,7 +10,7 @@ const PORT = process.env.PORT;
 const app = express();
 app.use(
 	cors({
-		origin: 'http://localhost:5173',
+		origin: process.env.CLIENT_URL,
 	}),
 );
 
@@ -19,8 +19,9 @@ app.use('/auth', router);
 app.use('/books', routerBooks);
 app.use('/books/:bookId/reviews', routerReviews);
 
-app.get('/health', (req, res) => {
-	res.json({ status: 'ok' });
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500).json({ message: 'Something went wrong' });
 });
 
 app.listen(PORT, () => {

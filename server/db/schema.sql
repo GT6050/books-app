@@ -1,7 +1,7 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) CHECK (LENGTH(password) >= 8) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
@@ -18,10 +18,10 @@ CREATE TABLE books (
 );
 
 CREATE TABLE reviews (
-id SERIAL PRIMARY KEY,
-book_id INTEGER REFERENCES books(id) NOT NULL,
-user_id INTEGER REFERENCES users(id) NOT NULL,
-rating INTEGER NOT NULL,
-comment VARCHAR(1000),
-created_at TIMESTAMP DEFAULT NOW()
-);
+    id SERIAL PRIMARY KEY,
+    book_id INTEGER REFERENCES books(id) NOT NULL,
+    user_id INTEGER REFERENCES users(id) NOT NULL,
+    rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    comment VARCHAR(1000),
+    created_at TIMESTAMP DEFAULT NOW()
+    );
