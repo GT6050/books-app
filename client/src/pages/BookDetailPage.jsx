@@ -64,11 +64,33 @@ const BookDetailPage = () => {
 		}
 	};
 
+	const handleDeleteReview = async (reviewId) => {
+		try {
+			const res = await fetch(
+				`${import.meta.env.VITE_API_URL}/books/${id}/reviews/${reviewId}`,
+				{
+					method: 'DELETE',
+					headers: { Authorization: `Bearer ${token}` },
+				},
+			);
+			if (!res.ok) throw new Error('Failed to delete review');
+			setReviews((prev) => prev.filter((r) => r.id !== reviewId));
+		} catch (err) {
+			setError(err.message);
+		}
+	};
+
 	return (
 		<main className='max-w-5xl mx-auto px-6 py-10'>
 			{bookLoading && <span>Loading...</span>}
 			{book && <BookInfo book={book} user={user} onDelete={handleDeleteBook} />}
-			<ReviewsList reviews={reviews} />
+			<ReviewsList
+				reviews={reviews}
+				bookId={id}
+				user={user}
+				token={token}
+				onDeleteReview={handleDeleteReview}
+			/>
 
 			{token && (
 				<ReviewForm
